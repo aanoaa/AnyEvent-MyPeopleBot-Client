@@ -122,5 +122,3 @@ __PACKAGE__->meta->make_immutable;
     $httpd->run;
 
 =cut
-
-1;
