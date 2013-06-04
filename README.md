@@ -1,8 +1,8 @@
-# AnyEvent-MyPeople-Client #
+# AnyEvent-MyPeopleBot-Client #
 
-AnyEvent-MyPeople-Client is a highlevel MyPeople API wrapper.
+AnyEvent-MyPeopleBot-Client is a highlevel MyPeopleBot API wrapper.
 
-[MyPeople](http://dna.daum.net/apis/mypeople) is like mobile instant
+[MyPeopleBot](http://dna.daum.net/apis/mypeople) is like mobile instant
 messaging service by [daum](http://daum.net) corporation.
 
 ## SYNOPSIS ##
@@ -10,7 +10,7 @@ messaging service by [daum](http://daum.net) corporation.
 ```perl
 use AnyEvent::HTTPD;
 use AnyEvent::Mepeople::Client;
-my $client = AnyEvent::MyPeople::Client->new(
+my $client = AnyEvent::MyPeopleBot::Client->new(
     apikey => 'xxxx',
 );
 
@@ -22,7 +22,7 @@ $httpd->reg_cb(
         my $groupId = $req->parm('groupId');
         my $content = $req->parm('content');
 
-        $req->respond({ content => [ 'text/plain', "AnyEvent::MyPeople::Client" ]});
+        $req->respond({ content => [ 'text/plain', "AnyEvent::MyPeopleBot::Client" ]});
         if ($action =~ /^sendFrom/) {
             $client->send($buddyId || $groupId, 'hi', sub {
                 my $json = shift;
