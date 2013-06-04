@@ -1,5 +1,5 @@
-package AnyEvent::Mypeople::Client;
-# Abstract: Mypeople API in an event loop
+package AnyEvent::MyPeople::Client;
+# Abstract: MyPeople API in an event loop
 
 use Moose;
 use namespace::autoclean;
@@ -97,7 +97,7 @@ __PACKAGE__->meta->make_immutable;
 
     use AnyEvent::HTTPD;
     use AnyEvent::Mepeople::Client;
-    my $client = AnyEvent::Mypeople::Client->new(
+    my $client = AnyEvent::MyPeople::Client->new(
         apikey => 'xxxx',
     );
 
@@ -109,7 +109,7 @@ __PACKAGE__->meta->make_immutable;
             my $groupId = $req->parm('groupId');
             my $content = $req->parm('content');
 
-            $req->respond({ content => [ 'text/plain', "AnyEvent::Mypeople::Client" ]});
+            $req->respond({ content => [ 'text/plain', "AnyEvent::MyPeople::Client" ]});
             if ($action =~ /^sendFrom/) {
                 $client->send($buddyId || $groupId, 'hi', sub {
                     my $json = shift;
