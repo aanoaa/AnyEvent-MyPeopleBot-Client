@@ -1,4 +1,5 @@
 package AnyEvent::MyPeopleBot::Client;
+
 # Abstract: MyPeopleBot API in an event loop
 
 use Moose;
@@ -14,41 +15,43 @@ has apikey => (
 );
 
 sub profile {
-    my ($self, $buddyId, $cb) = @_;
+    my ( $self, $buddyId, $cb ) = @_;
 
-    my $client = AnyEvent::HTTP::ScopedClient->new("https://apis.daum.net/mypeople/profile/buddy.json?apikey=" . $self->apikey);
-    $client->header('Accept', 'application/json')
-        ->post(
-            { buddyId => $buddyId },
-            sub {
-                my ($body, $hdr) = @_;
+    my $client = AnyEvent::HTTP::ScopedClient->new(
+        "https://apis.daum.net/mypeople/profile/buddy.json?apikey="
+          . $self->apikey );
+    $client->header( 'Accept', 'application/json' )->post(
+        { buddyId => $buddyId },
+        sub {
+            my ( $body, $hdr ) = @_;
 
-                return if ( !$body || $hdr->{Status} !~ /^2/ );
-                print "$body\n" if $ENV{DEBUG};
-                $cb->($body) if $cb;
-            }
-        );
+            return if ( !$body || $hdr->{Status} !~ /^2/ );
+            print "$body\n" if $ENV{DEBUG};
+            $cb->($body) if $cb;
+        }
+    );
 }
 
 sub buddys {
-    my ($self, $groupId, $cb) = @_;
+    my ( $self, $groupId, $cb ) = @_;
 
-    my $client = AnyEvent::HTTP::ScopedClient->new("https://apis.daum.net/mypeople/group/members.json?apikey=" . $self->apikey);
-    $client->header('Accept', 'application/json')
-        ->post(
-            { groupId => $groupId },
-            sub {
-                my ($body, $hdr) = @_;
+    my $client = AnyEvent::HTTP::ScopedClient->new(
+        "https://apis.daum.net/mypeople/group/members.json?apikey="
+          . $self->apikey );
+    $client->header( 'Accept', 'application/json' )->post(
+        { groupId => $groupId },
+        sub {
+            my ( $body, $hdr ) = @_;
 
-                return if ( !$body || $hdr->{Status} !~ /^2/ );
-                print "$body\n" if $ENV{DEBUG};
-                $cb->($body) if $cb;
-            }
-        );
+            return if ( !$body || $hdr->{Status} !~ /^2/ );
+            print "$body\n" if $ENV{DEBUG};
+            $cb->($body) if $cb;
+        }
+    );
 }
 
 sub send {
-    my ($self, $id, $msg, $cb) = @_;
+    my ( $self, $id, $msg, $cb ) = @_;
 
     my $which = $id =~ /^B/ ? 'buddy' : 'group';
     my %params = (
@@ -56,35 +59,37 @@ sub send {
         content       => $msg,
     );
 
-    my $client = AnyEvent::HTTP::ScopedClient->new("https://apis.daum.net/mypeople/$which/send.json?apikey=" . $self->apikey);
-    $client->header('Accept', 'application/json')
-        ->post(
-            \%params,
-            sub {
-                my ($body, $hdr) = @_;
+    my $client = AnyEvent::HTTP::ScopedClient->new(
+        "https://apis.daum.net/mypeople/$which/send.json?apikey="
+          . $self->apikey );
+    $client->header( 'Accept', 'application/json' )->post(
+        \%params,
+        sub {
+            my ( $body, $hdr ) = @_;
 
-                return if ( !$body || $hdr->{Status} !~ /^2/ );
-                print "$body\n" if $ENV{DEBUG};
-                $cb->($body) if $cb;
-            }
-        );
+            return if ( !$body || $hdr->{Status} !~ /^2/ );
+            print "$body\n" if $ENV{DEBUG};
+            $cb->($body) if $cb;
+        }
+    );
 }
 
 sub exit {
-    my ($self, $groupId, $cb) = @_;
+    my ( $self, $groupId, $cb ) = @_;
 
-    my $client = AnyEvent::HTTP::ScopedClient->new("https://apis.daum.net/mypeople/group/exit.json?apikey=" . $self->apikey);
-    $client->header('Accept', 'application/json')
-        ->post(
-            { groupId => $groupId },
-            sub {
-                my ($body, $hdr) = @_;
+    my $client = AnyEvent::HTTP::ScopedClient->new(
+        "https://apis.daum.net/mypeople/group/exit.json?apikey="
+          . $self->apikey );
+    $client->header( 'Accept', 'application/json' )->post(
+        { groupId => $groupId },
+        sub {
+            my ( $body, $hdr ) = @_;
 
-                return if ( !$body || $hdr->{Status} !~ /^2/ );
-                print "$body\n" if $ENV{DEBUG};
-                $cb->($body) if $cb;
-            }
-        );
+            return if ( !$body || $hdr->{Status} !~ /^2/ );
+            print "$body\n" if $ENV{DEBUG};
+            $cb->($body) if $cb;
+        }
+    );
 }
 
 __PACKAGE__->meta->make_immutable;
