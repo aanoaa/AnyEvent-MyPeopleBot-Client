@@ -2,14 +2,14 @@
 
 AnyEvent-MyPeopleBot-Client is a highlevel MyPeopleBot API wrapper.
 
-[MyPeopleBot](http://dna.daum.net/apis/mypeople) is like mobile instant
+[MyPeople](http://dna.daum.net/apis/mypeople) is like mobile instant
 messaging service by [daum](http://daum.net) corporation.
 
 ## SYNOPSIS ##
 
 ```perl
 use AnyEvent::HTTPD;
-use AnyEvent::Mepeople::Client;
+use AnyEvent::MyPeopleBot::Client;
 my $client = AnyEvent::MyPeopleBot::Client->new(
     apikey => 'xxxx',
 );
